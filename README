@@ -1,0 +1,13 @@
+#############################################
+# The Arduino / RFID / Data Logger project  #
+#############################################
+
+This git repository contains the source code for my first Arduino project.
+
+This project is aimed at creating a security / access system.  Access is granted (or denied) based upon the RFID wielded by the user. Every access attempt is being logged via a Data Logging Shield from Adafruit.  Also, who is granted access and who not is defined by data on the SD card of the Data Logging Shield.
+
+More detailed information can be found on the following blog site:
+
+navni-stuff.blogspot.com
+
+Greetz
