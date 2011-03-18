@@ -1,6 +1,9 @@
 #include <SdFat.h>
 #include <Wire.h>
 #include <RTClib.h>
+#include <NewSoftSerial.h>
+
+NewSoftSerial RfidNss(8,9);
 
 int DOOR = 7;
 int RFID_ENABLE = 2;
@@ -49,7 +52,8 @@ SdFile allowedFile;
 //===================================================================================
 void setup() { 
 
-  Serial.begin(2400);     // RFID reader SOUT pin connected to Serial RX pin at 2400bps 
+  Serial.begin(2400);     // RFID reader SOUT pin connected to Serial RX pin at 2400bps
+  RfidNss.begin(2400);
   Wire.begin();
   RTC.begin();
   pinMode(RFID_ENABLE,OUTPUT);   // Set digital pin 2 as OUTPUT to connect it to the RFID /ENABLE pin 
@@ -344,11 +348,11 @@ void readRFID(){
   bytesRead = 0;
   int val = 0;
 
-  if(Serial.available() > 0) {          // if data available from reader 
-    if((val = Serial.read()) == CODE_SIZE) {   // check for header 
+  if(RfidNss.available() > 0) {          // if data available from reader 
+    if((val = RfidNss.read()) == CODE_SIZE) {   // check for header 
       while(bytesRead<10) {              // read 10 digit code 
-        if( Serial.available() > 0) { 
-          val = Serial.read(); 
+        if( RfidNss.available() > 0) { 
+          val = RfidNss.read(); 
           if((val == 10)||(val == 13)) { // if header or stop bytes before the 10 digit reading 
             break;                       // stop reading 
           }
